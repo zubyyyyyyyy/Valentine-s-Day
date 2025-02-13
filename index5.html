@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Be My Valentine? ❤️</title>
+    <style>
+        body {
+            background: linear-gradient(45deg, #ff9a9e, #fad0c4, #ffdde1);
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            text-align: center;
+            min-height: 100vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .container {
+            margin-top: 50px;
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        .question {
+            font-size: 42px;
+            font-weight: bold;
+            color: #ff1493;
+            text-shadow: 3px 3px white;
+            animation: pulse 2s infinite;
+        }
+
+        .gif {
+            width: 250px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px red;
+        }
+
+        .buttons {
+            margin-top: 30px;
+        }
+
+        #yesBtn, #noBtn, #openBtn {
+            padding: 15px 30px;
+            border: none;
+            font-size: 25px;
+            cursor: pointer;
+            border-radius: 25px;
+            transition: transform 0.3s, background-color 0.3s;
+            margin: 10px;
+            font-weight: bold;
+        }
+
+        #yesBtn {
+            background-color: #32CD32;
+            color: white;
+            animation: glow 1.5s infinite;
+        }
+
+        #noBtn {
+            background-color: #FF6347;
+            color: white;
+        }
+
+        #openBtn {
+            background-color: #FFD700;
+            color: white;
+        }
+
+        #yesBtn:hover {
+            transform: scale(1.2);
+            background-color: #228B22;
+        }
+
+        #noBtn:hover {
+            transform: scale(1.2);
+            background-color: #FF4500;
+        }
+
+        #openBtn:hover {
+            transform: scale(1.2);
+            background-color: #FF8C00;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .shaking {
+            animation: shake 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 10px #32CD32; }
+            50% { box-shadow: 0 0 20px #90EE90; }
+        }
+
+        @keyframes shake {
+            0% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            50% { transform: translateX(10px); }
+            75% { transform: translateX(-10px); }
+            100% { transform: translateX(0); }
+        }
+
+        .confetti {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 999;
+        }
+
+        .confetti div {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: #ff1493;
+            animation: confetti-fall 3s infinite;
+        }
+
+        @keyframes confetti-fall {
+            0% { transform: translateY(0) rotate(0); }
+            100% { transform: translateY(100vh) rotate(720deg); }
+        }
+
+        .message {
+            font-size: 24px;
+            font-weight: bold;
+            color: #ff1493;
+            margin-top: 20px;
+            animation: fadeInMessage 1s ease-in-out;
+        }
+
+        @keyframes fadeInMessage {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        .openContent {
+            margin-top: 30px;
+        }
+
+        .photo {
+            width: 250px;
+            margin: 10px;
+            border-radius: 10px;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img src="https://media.giphy.com/media/l0HlNQ03J5JxX6lva/giphy.gif" class="gif" alt="Cute Love GIF">
+        <p class="question">Do you wanna be my Valentine? ❤️</p>
+        <div class="buttons">
+            <button id="yesBtn">YES 💘</button>
+            <button id="noBtn">NO 💔</button>
+            <button id="openBtn">OPEN ✉️</button>
+        </div>
+    </div>
+
+    <script>
+        let noClickCount = 0; // To keep track of how many times "NO" has been clicked
+
+        // Audio file for bird sounds (relaxing and chill)
+        const audio = new Audio('https://www.soundjay.com/button/beep-07.wav');
+        audio.loop = true; // Loop the sound
+        audio.volume = 0.2; // Adjust volume
+        audio.play();
+
+        // When "YES" button is clicked, screen shakes and confetti appears
+        document.getElementById('yesBtn').addEventListener('click', function() {
+            // Shake the screen
+            document.body.classList.add('shaking');
+
+            // Create confetti effect
+            const confettiContainer = document.createElement('div');
+            confettiContainer.classList.add('confetti');
+            document.body.appendChild(confettiContainer);
+
+            // Add confetti pieces
+            for (let i = 0; i < 200; i++) {
+                const confettiPiece = document.createElement('div');
+                confettiPiece.style.left = `${Math.random() * 100}vw`;
+                confettiPiece.style.animationDelay = `${Math.random() * 2}s`;
+                confettiContainer.appendChild(confettiPiece);
+            }
+
+            // Add hearts and other effects
+            for (let i = 0; i < 50; i++) {
+                let heart = document.createElement('div');
+                heart.innerHTML = '💖';
+                heart.style.fontSize = `${Math.random() * 30 + 20}px`;
+                heart.style.position = 'absolute';
+                heart.style.left = `${Math.random() * 100}vw`;
+                heart.style.top = `${Math.random() * 100}vh`;
+                heart.style.animation = `confetti-fall ${Math.random() * 3 + 1}s ease-in-out infinite`;
+                document.body.appendChild(heart);
+            }
+
+            // Change content after a few seconds
+            setTimeout(function() {
+                document.body.innerHTML = `
+                    <div style="padding: 20px;">
+                        <h1 style="color: red;">My Love ❤️</h1>
+                        <p style="font-size: 20px;">You are my everything! Every moment with you is special. I love you endlessly! 💖</p>
+                        <img src="https://i.imgur.com/b8a59UE_d.jpeg?maxwidth=520&shape=thumb&fidelity=high" alt="Our Photo" style="width: 200px; border-radius: 10px;">
+                        <br>
+                        <iframe width="560" height="315" src="https://www.youtube.com/embed/3JWTaaS7LdU" frameborder="0" allowfullscreen></iframe>
+                    </div>
+                `;
+            }, 2000); // Change after shaking
+
+        });
+
+        // When "NO" button is clicked
+        document.getElementById('noBtn').addEventListener('click', function() {
+            // Make the button shrink
+            this.style.transform = 'scale(0.7)';
+            this.style.opacity = '0.5';
+
+            noClickCount++;
+
+            // Show different messages after each click
+            let message = '';
+            if (noClickCount === 1) {
+                message = 'Are you sure? 💔';
+            } else if (noClickCount === 2) {
+                message = "Don't do this... 😢";
+            } else if (noClickCount === 3) {
+                message = 'Please say YES! 💖';
+            } else {
+                message = 'You made my heart sad... 😭';
+                this.style.display = 'none'; // Make the NO button disappear after 4th click
+            }
+
+            const messageElement = document.createElement('p');
+            messageElement.classList.add('message');
+            messageElement.textContent = message;
+            document.body.appendChild(messageElement);
+        });
+
+        // When "OPEN" button is clicked
+        document.getElementById('openBtn').addEventListener('click', function() {
+            // Create the "open" content
+            const openContent = document.createElement('div');
+            openContent.classList.add('openContent');
+
+            // Add images
+            const img1 = document.createElement('img');
+            img1.src = 'https://i.imgur.com/dPAxLAj_d.jpeg?maxwidth=520&shape=thumb&fidelity=high';
+            img1.classList.add('photo');
+            
+            const img2 = document.createElement('img');
+            img2.src = 'https://i.imgur.com/ijxXadt_d.jpeg?maxwidth=520&shape=thumb&fidelity=high';
+            img2.classList.add('photo');
+            
+            const img3 = document.createElement('img');
+            img3.src = 'https://i.imgur.com/UzE7Tbf_d.jpeg?maxwidth=520&shape=thumb&fidelity=high';
+            img3.classList.add('photo');
+
+            openContent.appendChild(img1);
+            openContent.appendChild(img2);
+            openContent.appendChild(img3);
+
+            // Add letter
+            const letter = document.createElement('p');
+            letter.textContent = `
+                Puiul meu drag,
+
+Nu știu dacă am cuvintele potrivite pentru a-ți spune ce simt, dar simt nevoia să îți scriu, pentru că vreau ca tu să știi cât de mult însemni pentru mine. Trei ani… Trei ani care au trecut într-o clipă și totuși au lăsat în urma lor o poveste de neuitat. Nu am crezut niciodată că pot iubi atât de mult, dar tu m-ai învățat ce înseamnă iubirea adevărată, profundă, ce nu cere nimic, doar dăruire.
+
+Primul nostru sărut… Cum am putea uita acea clipă? Atunci, totul părea perfect. Am simțit că între noi există o legătură mult mai profundă decât o simplă întâlnire de priviri, o atracție fizică. A fost ceva mai mult – o promisiune, o început al unei povești care avea să ne transforme amândurora viața. Dacă îți spun că acel sărut mi-a rămas pe retină și că îmi amintesc fiecare detaliu, o fac cu toată sinceritatea. A fost momentul în care am știut că tu ești acea persoană cu care vreau să fiu, că nu îmi doresc altceva decât să împărtășesc tot ce am cu tine.
+
+Știu că am greșit și știu că nu sunt perfect. Mă doare când îmi dau seama că ți-am rănit sentimentele și că poate am făcut să te simți nesigură. Te rog să îmi ierți greșelile. Nu a fost intenționat și niciodată nu voi lăsa acele momente să umbrească tot ce avem. Căci ceea ce avem noi este ceva mult mai frumos decât orice neînțelegere. Iubirea mea pentru tine este mai mare decât orice greșeală și promit că voi învăța din fiecare pas greșit, că voi deveni omul care meriți.
+
+Îți mai amintești acel Valentine’s Day? Când ți-am adus acel balon mare în formă de inimă? Când l-ai pus în camera ta, am simțit o căldură imensă în sufletul meu, pentru că știa că ai păstrat acel mic simbol al iubirii noastre. Poate părea un gest mic, dar pentru mine a fost enorm. Era doar un mod de a-ți arăta cât te iubesc, cât de importantă ești pentru mine. Și mă bucur că acel balon a ajuns să fie o amintire, o fărâmă din noi doi, care va rămâne acolo, în camera ta, în fiecare zi.
+
+Trei ani... Mi se pare că am trăit o viață întreagă împreună, și totodată, fiecare zi cu tine este o nouă poveste. Știu că nu am fost mereu la înălțimea iubirii tale și îmi pare rău pentru momentele în care nu ți-am arătat cât te apreciez, dar te rog să știi că pentru mine tu ești totul. Vreau ca iubirea noastră să crească în fiecare zi, să învăț din greșelile mele și să îți arăt cât de mult te iubesc.
+
+Cu tine am învățat ce înseamnă răbdarea, ce înseamnă să fii prezent, să îți pese de celălalt în fiecare clipă. Vreau să fiu omul care îți face ziua mai bună, care te sprijină și care te face să te simți iubită și respectată în fiecare moment. Iar pentru toate greșelile mele, îți cer din nou iertare, cu toată sinceritatea.
+
+Te iubesc, puiul meu. Te iubesc mai mult decât pot exprima cuvintele și îți mulțumesc că îmi ești alături, că mă iubești și că îmi dăruiești atâta fericire. Vreau să petrec tot restul vieții alături de tine, să trăim împreună toate momentele care ne așteaptă și să facem iubirea noastră să crească și să înflorească.
+
+Te iubesc și îți mulțumesc pentru tot ce ești pentru mine.
+
+Cu toată dragostea mea,
+Andrei
+
+            `;
+            openContent.appendChild(letter);
+
+            document.body.appendChild(openContent);
+        });
+
+    </script>
+</body>
+</html>
